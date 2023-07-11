@@ -1,7 +1,7 @@
 package com.example.caloriescalculator.controllers;
 
 import com.example.caloriescalculator.models.FoodNutrition;
-import com.example.caloriescalculator.services.FoodNutritionService;
+import com.example.caloriescalculator.services.FoodNutritionServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,22 +14,22 @@ import java.util.List;
 @RequestMapping("/api/v1/food-nutrition")
 public class FoodNutritionController {
 
-    private final FoodNutritionService foodNutritionService;
+    private final FoodNutritionServiceImpl foodNutritionServiceImpl;
 
     @Autowired
-    public FoodNutritionController(FoodNutritionService foodNutritionService) {
-        this.foodNutritionService = foodNutritionService;
+    public FoodNutritionController(FoodNutritionServiceImpl foodNutritionServiceImpl) {
+        this.foodNutritionServiceImpl = foodNutritionServiceImpl;
     }
 
     @GetMapping
     public ResponseEntity<List<FoodNutrition>> getAllFoodNutrition() {
-        List<FoodNutrition> foodNutritions = foodNutritionService.getAllFoodNutrition();
+        List<FoodNutrition> foodNutritions = foodNutritionServiceImpl.getAllFoodNutrition();
         return new ResponseEntity<>(foodNutritions, HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<FoodNutrition> getFoodNutritionById(@PathVariable("id") Integer id) {
-        FoodNutrition foodNutrition = foodNutritionService.getFoodNutritionById(id);
+        FoodNutrition foodNutrition = foodNutritionServiceImpl.getFoodNutritionById(id);
         if (foodNutrition != null) {
             return new ResponseEntity<>(foodNutrition, HttpStatus.OK);
         } else {
@@ -39,14 +39,14 @@ public class FoodNutritionController {
 
     @PostMapping
     public ResponseEntity<FoodNutrition> createFoodNutrition(@RequestBody FoodNutrition foodNutrition) {
-        FoodNutrition createdFoodNutrition = foodNutritionService.createFoodNutrition(foodNutrition);
+        FoodNutrition createdFoodNutrition = foodNutritionServiceImpl.createFoodNutrition(foodNutrition);
         return new ResponseEntity<>(createdFoodNutrition, HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<FoodNutrition> updateFoodNutrition(@PathVariable("id") Integer id,
                                                              @RequestBody FoodNutrition foodNutrition) {
-        FoodNutrition updatedFoodNutrition = foodNutritionService.updateFoodNutrition(id, foodNutrition);
+        FoodNutrition updatedFoodNutrition = foodNutritionServiceImpl.updateFoodNutrition(id, foodNutrition);
         if (updatedFoodNutrition != null) {
             return new ResponseEntity<>(updatedFoodNutrition, HttpStatus.OK);
         } else {
@@ -56,7 +56,7 @@ public class FoodNutritionController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteFoodNutrition(@PathVariable("id") Integer id) {
-        boolean deleted = foodNutritionService.deleteFoodNutrition(id);
+        boolean deleted = foodNutritionServiceImpl.deleteFoodNutrition(id);
         if (deleted) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         } else {
